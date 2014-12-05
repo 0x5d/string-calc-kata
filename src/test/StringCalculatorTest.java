@@ -93,19 +93,12 @@ public class StringCalculatorTest {
 		}
 	}
 	
-	@Test
-	public void testNegatives() {
+	@Test(expected = Exception.class)
+	public void testNegatives() throws Exception {
 		StringCalculator sc = new StringCalculator();
 		int res;
-		Exception e = null;
-		try {
-			res = sc.add("1\n3,-4,-6,9,0,-1");
-			Assert.assertEquals(4, res);
-		} catch (Exception ex) {
-			e = ex;
-		}
-		Assert.assertTrue(e != null);
-		Assert.assertEquals("Negatives not allowed: -4, -6, -1", e.getMessage());
+		res = sc.add("1\n3,-4,-6,9,0,-1");
+		Assert.assertEquals(4, res);
 	}
 	
 	@Test
@@ -125,7 +118,19 @@ public class StringCalculatorTest {
 		StringCalculator sc = new StringCalculator();
 		int res;
 		try {
-			res = sc.add("//[¿¿¿]\n1¿¿¿3¿¿¿4");
+			res = sc.add("//[***]\n1***3***4");
+			Assert.assertEquals(8, res);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testMultipleCustomSeparators() {
+		StringCalculator sc = new StringCalculator();
+		int res;
+		try {
+			res = sc.add("//[***][¿¿]\n1***3¿¿4");
 			Assert.assertEquals(8, res);
 		} catch (Exception e) {
 			e.printStackTrace();
