@@ -82,7 +82,8 @@ public class StringCalculator {
 						negs.append(", ");
 						negs.append(negatives.get(i));
 					}
-					throw new NegativeNumberException("Negatives not allowed: " + negs.toString());
+					throw new NegativeNumberException("Negatives not allowed: "
+							+ negs.toString());
 				}
 			}
 			// If the input is invalid, throw an exception.
