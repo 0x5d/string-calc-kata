@@ -1,10 +1,7 @@
-package test;
-
-import static org.junit.Assert.*;
+package calc;
 
 import org.junit.Assert;
 import org.junit.Test;
-
 import calc.StringCalculator;
 
 public class StringCalculatorTest {
