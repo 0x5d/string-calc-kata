@@ -8,75 +8,51 @@ import com.talosdigital.calc.StringCalculator;
 public class StringCalculatorTest {
 
 	@Test
-	public void testNoArgs() {
+	public void testNoArgs() throws IllegalArgumentException{
 		StringCalculator sc = new StringCalculator();
 		int res;
-		try {
-			res = sc.add("");
-			Assert.assertEquals(0, res);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		res = sc.add("");
+		Assert.assertEquals(0, res);
 	}
 	
 	@Test
-	public void testOneArg() {
+	public void testOneArg() throws IllegalArgumentException{
 		StringCalculator sc = new StringCalculator();
 		int res;
-		try {
-			res = sc.add("1");
-			Assert.assertEquals(1, res);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		res = sc.add("1");
+		Assert.assertEquals(1, res);
 	}
 	
 	@Test
-	public void testTwoArgs() {
+	public void testTwoArgs() throws IllegalArgumentException{
 		StringCalculator sc = new StringCalculator();
 		int res;
-		try {
-			res = sc.add("1,2");
-			Assert.assertEquals(3, res);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		res = sc.add("1,2");
+		Assert.assertEquals(3, res);
 	}
 	
 	@Test
-	public void testMultipleArgs() {
+	public void testMultipleArgs() throws IllegalArgumentException{
 		StringCalculator sc = new StringCalculator();
 		int res;
-		try {
-			res = sc.add("1,1,2,3,5");
-			Assert.assertEquals(12, res);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		res = sc.add("1,1,2,3,5");
+		Assert.assertEquals(12, res);
 	}
 	
 	@Test
-	public void testNewLineSeparator() {
+	public void testNewLineSeparator() throws IllegalArgumentException{
 		StringCalculator sc = new StringCalculator();
 		int res;
-		try {
-			res = sc.add("1\n3");
-			Assert.assertEquals(4, res);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		res = sc.add("1\n3");
+		Assert.assertEquals(4, res);
 	}
 	
 	@Test
-	public void testCustomSeparator() {
+	public void testCustomSeparator() throws IllegalArgumentException{
 		StringCalculator sc = new StringCalculator();
 		int res;
-		try {
-			res = sc.add("//s\n1s2");
-			Assert.assertEquals(3, res);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		res = sc.add("//s\n1s2");
+		Assert.assertEquals(3, res);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
@@ -101,38 +77,26 @@ public class StringCalculatorTest {
 	}
 	
 	@Test
-	public void testBiggerThanThousand() {
+	public void testBiggerThanThousand() throws IllegalArgumentException{
 		StringCalculator sc = new StringCalculator();
 		int res;
-		try {
-			res = sc.add("3,1001,2");
-			Assert.assertEquals(5, res);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		res = sc.add("3,1001,2");
+		Assert.assertEquals(5, res);
 	}
 	
 	@Test
-	public void testLongSeparators() {
+	public void testLongSeparators() throws IllegalArgumentException{
 		StringCalculator sc = new StringCalculator();
 		int res;
-		try {
-			res = sc.add("//[***]\n1***3***4");
-			Assert.assertEquals(8, res);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		res = sc.add("//[***]\n1***3***4");
+		Assert.assertEquals(8, res);
 	}
 	
 	@Test
-	public void testMultipleCustomSeparators() {
+	public void testMultipleCustomSeparators() throws IllegalArgumentException{
 		StringCalculator sc = new StringCalculator();
 		int res;
-		try {
-			res = sc.add("//[***][¿¿]\n1***3¿¿4");
-			Assert.assertEquals(8, res);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		res = sc.add("//[***][¿¿]\n1***3¿¿4");
+		Assert.assertEquals(8, res);
 	}
 }

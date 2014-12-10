@@ -19,42 +19,24 @@ public class StringCalculator {
 	 * @return The sum's total.
 	 * @throws NegativeNumberException
 	 */
-	public int add(String stringToProcess) throws NegativeNumberException{
+	public int add(String stringToProcess)
+			throws IllegalArgumentException, NegativeNumberException{
 		// Init. the result to its default value (0).
 		int total = 0;
 		// Check if the input string's empty.
 		if(!StringUtils.isEmpty(stringToProcess)){
 			// numbersList will hold the string of input numbers.
 			String numbersList;
-			// splitArgs will hold the arguments. If the user specified a
-			// custom delimiter, split("//") will return an array of length 2.
-			String[] splitArgs = stringToProcess.split("//");
 			// splitNumbers will hold the parsed array u¡of input numbers.
 			String[] splitNumbers;
 			// delRegex will hold the delimiter regex based on the
 			// user-specified ones or the default (\n ,).
 			String delimiterRegex;
-			// if splitArgs has a length of 2, the user has specified custom
-			// delimiters. splitArgs must be processed accordingly.
-			if(splitArgs.length == 2){
-				// Doing a split on splitArgs[1] will return an array of length
-				// 2. Position [0] will hold the custom delimiter(s) and
-				// position [1] holds the string list of numbers to add.
-				numbersList = splitArgs[1].split("[\\n]")[1];
-				// Process the delimiter(s).
-				delimiterRegex = Pattern.quote(splitArgs[1].split("[\\n]")[0]);
-				delimiterRegex = delimiterRegex.replace("[","").replace("]","");
-				StringBuilder regexBuilder = new StringBuilder();
-				regexBuilder.append("[");
-				regexBuilder.append(delimiterRegex);
-				regexBuilder.append("]+");
-				delimiterRegex = regexBuilder.toString();
-			}
-			else{
-				// The user didn't specify custom delimiters. Use default.
-				delimiterRegex = "[\\n,]";
-				numbersList = splitArgs[0];
-			}
+			
+			String[] parsedInput = parseInput(stringToProcess);
+			delimiterRegex = parsedInput[0];
+			numbersList = parsedInput[1];
+			
 			//Parse the string list of numbers.
 			splitNumbers = numbersList.split(delimiterRegex);
 			// negatives may hold the negative numbers if present within the
@@ -63,7 +45,9 @@ public class StringCalculator {
 			try{
 				// Go over the array of string numbers and try parsing them
 				// into ints.
+				//System.out.println("Numbers: ");
 				for(String number : splitNumbers){
+					//System.out.println(number);
 					int nextAdd = Integer.parseInt(number);
 					// If the number's negative, add it to negatives.
 					if(nextAdd < 0){
@@ -89,6 +73,37 @@ public class StringCalculator {
 			}
 		}
 		return total;
+	}
+	
+	private String[] parseInput(String input){
+		String[] parsedInput = new String[2];
+		String numbersList;
+		StringBuilder delimitersRegex = new StringBuilder();
+		String[] splitInput = input.split("//");
+		delimitersRegex.append("\n|,");
+		
+		if(splitInput.length == 2){
+			String[] splitArgs = splitInput[1].split("\n");
+			String delimitersString = splitArgs[0];
+			numbersList = splitArgs[1];
+			
+			String[] delimiters = delimitersString.split(Pattern.quote("["));
+			for(int i = 0; i < delimiters.length; i++){
+				if(!StringUtils.isEmpty(delimiters[i])){
+					delimiters[i] =
+							Pattern.quote(delimiters[i].replace("]", ""));
+					delimitersRegex.append("|").append(delimiters[i]);
+				}
+			}
+		}
+		else{
+			// The user didn't specify custom delimiters. Use default.
+			numbersList = splitInput[0];
+		}
+		parsedInput[0] = delimitersRegex.toString();
+		parsedInput[1] = numbersList;
+		
+		return parsedInput;
 	}
 
 }
