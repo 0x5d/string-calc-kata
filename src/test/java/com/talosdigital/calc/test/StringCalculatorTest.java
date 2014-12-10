@@ -2,7 +2,7 @@ package com.talosdigital.calc.test;
 
 import org.junit.Assert;
 import org.junit.Test;
-
+import com.talosdigital.calc.NegativeNumberException;
 import com.talosdigital.calc.StringCalculator;
 
 public class StringCalculatorTest {
@@ -60,8 +60,8 @@ public class StringCalculatorTest {
 		StringCalculator sc = new StringCalculator();
 		int res;
 		try {
-			res = sc.add("1,@");
-			Assert.assertEquals(0, res);
+			res = sc.add("1\n3");
+			Assert.assertEquals(4, res);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -79,24 +79,25 @@ public class StringCalculatorTest {
 		}
 	}
 	
-	@Test
-	public void testInvalidArg() {
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidArg() throws IllegalArgumentException{
 		StringCalculator sc = new StringCalculator();
-		int res;
-		try {
-			res = sc.add("1\n3");
-			Assert.assertEquals(4, res);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		sc.add("1,@");
+		Assert.fail("No exception thrown when invalid argument was input.");
 	}
 	
-	@Test(expected = Exception.class)
-	public void testNegatives() throws Exception {
+	@Test
+	public void testNegatives(){
 		StringCalculator sc = new StringCalculator();
-		int res;
-		res = sc.add("1\n3,-4,-6,9,0,-1");
-		Assert.assertEquals(4, res);
+		try {
+			sc.add("1\n3,-4,-6,9,0,-1");
+			Assert.fail("No exception was thrown when negative numbers "
+					+ "were input");
+		}
+		catch(NegativeNumberException nne) {
+			Assert.assertEquals("Negatives not allowed: -4, -6, -1",
+					nne.getMessage());
+		}
 	}
 	
 	@Test

@@ -78,19 +78,14 @@ public class StringCalculator {
 				// If at least one negative number was input, throw an
 				// exception describing the problem.
 				if(negatives.size() > 0){
-					StringBuilder negs = new StringBuilder();
-					negs.append(negatives.get(0));
-					for(int i = 1; i < negatives.size(); i++){
-						negs.append(", ");
-						negs.append(negatives.get(i));
-					}
+					String negativeNumbers = StringUtils.join(negatives, ", ");
 					throw new NegativeNumberException("Negatives not allowed: "
-							+ negs.toString());
+							+ negativeNumbers.toString());
 				}
 			}
 			// If the input is invalid, throw an exception.
 			catch(NumberFormatException e){
-				return 0;
+				throw new IllegalArgumentException();
 			}
 		}
 		return total;
