@@ -1,8 +1,9 @@
-package calc;
+package com.talosdigital.calc.test;
 
 import org.junit.Assert;
 import org.junit.Test;
-import calc.StringCalculator;
+
+import com.talosdigital.calc.StringCalculator;
 
 public class StringCalculatorTest {
 

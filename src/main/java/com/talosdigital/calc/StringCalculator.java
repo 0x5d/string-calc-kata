@@ -1,4 +1,4 @@
-package calc;
+package com.talosdigital.calc;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
